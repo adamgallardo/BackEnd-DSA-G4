@@ -3,21 +3,23 @@ package edu.upc.dsa;
 import edu.upc.dsa.util.RandomUtils;
 
 public class User {
-    String nombre;
-    String apellidos;
-    String email;
-    String password;
-    String username;
-    String id;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private String username;
+    private String id;
+    private Integer coins;
 
     //Constructor para inicializar las variables
-    public User(String nombre, String apellidos, String email, String username, String password){
-        this.nombre=nombre;
-        this.apellidos=apellidos;
+    public User(String name, String surname, String email, String username, String password){
+        this.name=name;
+        this.surname=surname;
         this.email=email;
         this.username=username;
         this.password=password;
         this.id=RandomUtils.getId();
+        this.coins=0;
     }
 
     //Constructor vacío para la API REST
@@ -25,10 +27,10 @@ public class User {
     }
 
     //Setters & getters
-    public String getNombre(){return this.nombre;}
-    public void setNombre(String nombre){this.nombre=nombre;}
-    public String getApellidos(){return this.apellidos;}
-    public void setApellidos(String apellidos){this.apellidos=apellidos;}
+    public String getName(){return this.name;}
+    public void setName(String name){this.name=name;}
+    public String getSurname(){return this.surname;}
+    public void setSurname(String surname){this.surname=surname;}
     public String getEmail(){return this.email;}
     public void setEmail(String email){this.email=email;}
     public String getUsername(){return this.username;}
@@ -38,4 +40,11 @@ public class User {
     public String getId(){return this.id;}
     public void setId(String id){this.id=id;}
 
+    public Integer getCoins() {
+        return this.coins;
+    }
+
+    public void setCoins(Integer coins) {
+        this.coins = coins;
+    }
 }
