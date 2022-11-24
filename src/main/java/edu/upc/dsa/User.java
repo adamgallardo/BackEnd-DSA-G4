@@ -3,18 +3,15 @@ package edu.upc.dsa;
 import edu.upc.dsa.util.RandomUtils;
 
 public class User {
-    private String name;
-    private String surname;
-    private String email;
-    private String password;
-    private String username;
+
     private String id;
+    private String username;
+    private String password;
+    private String email;
     private Integer coins;
 
     //Constructor para inicializar las variables
-    public User(String name, String surname, String email, String username, String password){
-        this.name=name;
-        this.surname=surname;
+    public User( String username, String password, String email){
         this.email=email;
         this.username=username;
         this.password=password;
@@ -27,10 +24,7 @@ public class User {
     }
 
     //Setters & getters
-    public String getName(){return this.name;}
-    public void setName(String name){this.name=name;}
-    public String getSurname(){return this.surname;}
-    public void setSurname(String surname){this.surname=surname;}
+
     public String getEmail(){return this.email;}
     public void setEmail(String email){this.email=email;}
     public String getUsername(){return this.username;}
