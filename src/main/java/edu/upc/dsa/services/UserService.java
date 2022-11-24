@@ -51,7 +51,7 @@ public class UserService {
             return Response.status(406).build();
         else {
             this.manager.addUser(user.getUsername(), user.getPassword(), user.getEmail());
-            return Response.status(200).entity(user).build();
+            return Response.status(201).entity(user).build();
         }
     }
 }
