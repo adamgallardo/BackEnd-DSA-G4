@@ -6,7 +6,7 @@ public class SignUp {
     private String email;
 
 
-    public SignUp(String username, String password){}
+    public SignUp(){}
 
     public SignUp(String username, String password, String email){
 

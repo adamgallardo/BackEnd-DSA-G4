@@ -12,8 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         function signup() {
-            var name = $('#name').val();
-            var surname = $('#surnames').val();
+
             var email = $('#email').val();
             var username = $('#username').val();
             var password = $('#password').val();
@@ -21,15 +20,15 @@
             $.ajax({
                 contentType: "application/json",
                 type: 'POST',
-                url: ,
-                data: JSON.stringify({ "name": name,"surname": surname, "email": email,"username": username, "password": password}),
+                url: 'http://localhost:8080/dsaApp/user/signUp',
+                data: JSON.stringify({ "email": email,"username": username, "password": password}),
                 dataType: 'json',
                 success: function (result) {
                     alert("Sign up completed. Nice to meet you, " + username);
                     localStorage.setItem("activeUser", username);
                 },
                 error: function (error) {
-                    if (name == "" || surname == "" || email == "" || username == "" || password == "")
+                    if (email == "" || username == "" || password == "")
                         alert("You left something blank. Please try again!");
                     else
                         alert("Username or email already in use. Please try again!");
@@ -73,14 +72,7 @@
     </div>
     <div id="registro" class="container text-center">
         <h3>Create an account</h3>
-        <label for="name">Name</label>
-        <br>
-        <input id="name"  placeholder="Your name">
-        <br>
-        <label for="surnames">Surnames</label>
-        <br>
-        <input id="surnames"  placeholder="Your surnames">
-        <br>
+
         <label for="mail">Email</label>
         <br>
         <input id="mail"  placeholder="user@santabread.net">
