@@ -24,3 +24,24 @@ function signup() {
         }
     });
 }
+function login() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    $.ajax({
+        contentType: "application/json",
+        type: 'POST',
+        url: '/dsaApp/user/logIn',
+        data: JSON.stringify({ "username": username, "password": password }),
+        dataType: 'json',
+        success: function(result){
+            alert("Inicio de sesión correcto");
+        },
+        error: function(error){
+            if (username == "" || password == "")
+                alert("No has rellenado algun campo");
+            else{
+                alert("Error");
+            }
+        }
+    });
+}

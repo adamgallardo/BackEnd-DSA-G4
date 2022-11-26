@@ -33,11 +33,9 @@ public class User {
     public void setPassword(String password){this.password=password;}
     public String getId(){return this.id;}
     public void setId(String id){this.id=id;}
-
     public Integer getCoins() {
         return this.coins;
     }
-
     public void setCoins(Integer coins) {
         this.coins = coins;
     }

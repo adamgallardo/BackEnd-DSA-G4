@@ -1,9 +1,6 @@
 package edu.upc.dsa.services;
 
-import edu.upc.dsa.GameManager;
-import edu.upc.dsa.GameManagerImpl;
-import edu.upc.dsa.SignUp;
-import edu.upc.dsa.User;
+import edu.upc.dsa.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -52,6 +49,31 @@ public class UserService {
         else {
             this.manager.addUser(user.getUsername(), user.getPassword(), user.getEmail());
             return Response.status(201).entity(user).build();
+        }
+    }
+
+
+    @POST
+    @ApiOperation(value = "LogIn User", notes = "Name and Password")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 405, message = "Wrong password"),
+            @ApiResponse(code = 500, message = "Invalid credentials")
+    })
+    @Path("/logIn")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logInUser(LogIn logInCred) {
+        User user = this.manager.getUserByName(logInCred.getUsername());
+        if ((logInCred.getUsername().isEmpty()) || (logInCred.getPassword().isEmpty()))
+            return Response.status(500).build();
+        else if (user == null)
+            return Response.status(404).build();
+        else {
+            if (user.getPassword().equals(logInCred.getPassword()))
+                return Response.status(200).entity(user).build();
+            else
+                return Response.status(405).build();
         }
     }
 }
