@@ -1,4 +1,4 @@
-let URL='http://localhost:8080';
+let URL='http://147.83.7.206:8080';//http://localhost:8080  http://147.83.7.206:8080
 function signup() {
 
     var email = $('#email').val();
@@ -30,7 +30,7 @@ function login() {
     $.ajax({
         contentType: "application/json",
         type: 'POST',
-        url: '/dsaApp/user/logIn',
+        url: URL+'/dsaApp/user/logIn',
         data: JSON.stringify({ "username": username, "password": password }),
         dataType: 'json',
         success: function(result){
