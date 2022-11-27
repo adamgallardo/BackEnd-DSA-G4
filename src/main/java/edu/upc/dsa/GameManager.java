@@ -6,4 +6,5 @@ public interface GameManager {
     int size();
     User getUserByName(String name);
     User getUserByEmail(String email);
+
 }
