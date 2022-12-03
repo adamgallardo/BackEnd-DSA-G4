@@ -1,23 +1,27 @@
 package edu.upc.dsa.services;
 
 import edu.upc.dsa.*;
+import edu.upc.dsa.dao.IUserDAO;
+import edu.upc.dsa.dao.implementations.UserDAOImpl;
+import edu.upc.dsa.models.LogIn;
+import edu.upc.dsa.models.SignUp;
+import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Api(value = "/user", description = "Endpoint to User Service")
 @Path("/user")
 public class UserService {
-    private GameManager manager;
+    private IUserDAO manager;
 
     public UserService(){
-        this.manager = GameManagerImpl.getInstance();
+        this.manager = UserDAOImpl.getInstance();
         if(manager.size()==0){
             this.manager.addUser("Legyonaryus","1234","agallardo@dsa.com");
         }
@@ -29,7 +33,7 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class),
             @ApiResponse(code = 405, message = "Username already in use"),
-            @ApiResponse(code = 406, message = "email already in use"),
+            @ApiResponse(code = 406, message = "Email already in use"),
             @ApiResponse(code = 500, message = "Validation Error")
     })
     @Path("/signUp")
