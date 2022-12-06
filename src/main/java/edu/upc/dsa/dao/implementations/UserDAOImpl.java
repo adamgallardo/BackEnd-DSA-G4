@@ -27,12 +27,12 @@ public class UserDAOImpl implements IUserDAO {
     public User addUser(String username, String password, String email){
         User u = new User(username,password,email);
         session.save(u);
-        logger.info("Add new user: "+u);
+        logger.info("Add new user: " + u);
         return u;
     }
     @Override
     public User getUserByName(String username){
-        User u = (User) this.session.getByUsername(UserDAOImpl.class, username);
+        User u = (User) this.session.getByUsername(User.class, username);
         logger.info("Get user by name: " + username);
         return u;
     }

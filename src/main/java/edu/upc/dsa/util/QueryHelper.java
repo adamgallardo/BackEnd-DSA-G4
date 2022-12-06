@@ -37,7 +37,7 @@ public class QueryHelper {
     public static String createQuerySELECTByName(Class theClass, String name){
         StringBuffer sb = new StringBuffer("");
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());
-        sb.append("WHERE name = '").append(name).append("'");
+        sb.append(" WHERE username = '").append(name).append("'");
         return sb.toString();
     }
 }

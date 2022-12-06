@@ -63,7 +63,9 @@ public class SessionImpl implements Session {
             }
             return entity;
         }
-        catch(SQLException | InstantiationException | IllegalAccessException e){e.printStackTrace();}
+        catch(SQLException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
