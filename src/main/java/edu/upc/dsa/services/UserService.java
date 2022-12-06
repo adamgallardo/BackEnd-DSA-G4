@@ -1,6 +1,5 @@
 package edu.upc.dsa.services;
 
-import edu.upc.dsa.*;
 import edu.upc.dsa.dao.IUserDAO;
 import edu.upc.dsa.dao.implementations.UserDAOImpl;
 import edu.upc.dsa.models.LogIn;
@@ -22,9 +21,6 @@ public class UserService {
 
     public UserService(){
         this.manager = UserDAOImpl.getInstance();
-        if(manager.size()==0){
-            this.manager.addUser("Legyonaryus","1234","agallardo@dsa.com");
-        }
     }
 
     // Sign Up

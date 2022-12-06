@@ -12,9 +12,10 @@ public class UserDAOImpl implements IUserDAO {
 
     private static UserDAOImpl instance;
     final static Logger logger = Logger.getLogger(UserDAOImpl.class);
-    private List<User> users;
+    private SessionImpl session;
+
     private UserDAOImpl(){
-        this.users=new LinkedList<>();//Users list
+        this.session = SessionImpl.getInstance();
     }
     public static IUserDAO getInstance(){
         if(instance == null){
@@ -25,8 +26,8 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User addUser(String username, String password, String email){
         User u = new User(username,password,email);
-        this.users.add(u);
-        logger.info("Add new user: "+u.toString());
+        session.save(u);
+        logger.info("Add new user: "+u);
         return u;
     }
     @Override
@@ -38,13 +39,11 @@ public class UserDAOImpl implements IUserDAO {
     }
     @Override
     public User getUserByEmail(String email) {
-        for (User u: this.users){
+        List<User> users = new LinkedList<>();
+        session.findAll(User.class).forEach(user -> users.add((User) user));
+        for (User u: users){
             if(u.getEmail().equals(email)){return u;}
         }
         return null;
-    }
-    @Override
-    public int size() {
-        return this.users.size();
     }
 }
