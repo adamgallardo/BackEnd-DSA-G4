@@ -46,6 +46,28 @@ public class SessionImpl implements Session {
     }
 
     @Override
+    public Object getByUsername(Class theClass, String username) {
+        String query = QueryHelper.createQuerySELECTByName(theClass, username);
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(query);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            Object entity = theClass.newInstance();
+            while(rs.next()){
+                for(int i=1; i<rsmd.getColumnCount()+1; i++){
+                    ObjectHelper.setter(entity, rsmd.getColumnName(i),rs.getObject(i));
+                }
+            }
+            return entity;
+        }
+        catch(SQLException | InstantiationException | IllegalAccessException e){e.printStackTrace();}
+        return null;
+    }
+
+    @Override
     public void close() {
         try {
             this.conn.close();

@@ -32,10 +32,9 @@ public class UserDAOImpl implements IUserDAO {
     }
     @Override
     public User getUserByName(String username){
-        for (User u: this.users){
-            if(u.getUsername().equals(username)){return u;}
-        }
-        return null;
+        User u = (User) this.session.getByUsername(UserDAOImpl.class, username);
+        logger.info("Get user by name: " + username);
+        return u;
     }
     @Override
     public User getUserByEmail(String email) {
