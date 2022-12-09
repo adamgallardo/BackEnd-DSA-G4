@@ -33,6 +33,9 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User getUserByName(String username){
         User u = (User) this.session.getByUsername(User.class, username);
+        if (u.getUsername() == null){
+            return null;
+        }
         logger.info("Get user by name: " + username);
         return u;
     }
