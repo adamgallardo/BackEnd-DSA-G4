@@ -21,7 +21,7 @@ public class FactorySession {
         Connection conn = null;
         Properties properties = new Properties();
         properties.setProperty("user","root");
-        properties.setProperty("password","mariadb");
+        properties.setProperty("password","Mazinger72"); // mariadb -- Mazinger72
         try {
             conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/santadb", properties);
 
