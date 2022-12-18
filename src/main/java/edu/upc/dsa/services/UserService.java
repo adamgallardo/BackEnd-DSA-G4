@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -52,7 +53,7 @@ public class UserService {
         }
     }
 
-
+    //Log In
     @POST
     @ApiOperation(value = "LogIn User", notes = "Name and Password")
     @ApiResponses(value = {
@@ -74,6 +75,46 @@ public class UserService {
                 return Response.status(200).entity(user).build();
             else
                 return Response.status(405).build();
+        }
+    }
+
+    // Get one user in particular
+    @GET
+    @ApiOperation(value = "Get a particuler user", notes = "username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@PathParam("username") String username) {
+
+        User user = this.manager.getUserByName(username);
+        if (user == null) {
+            return Response.status(404).build();
+        } else {
+            GenericEntity<User> entity = new GenericEntity<User>(user) {};
+            return Response.status(201).entity(entity).build();
+        }
+    }
+
+    //Delete a user
+    @DELETE
+    @ApiOperation(value = "Delete a user", notes = "Id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/delete/{id}")
+    public Response deleteUser(@PathParam("id") String id){
+
+        User user = manager.getUserById(id);
+        if (user == null) {
+            return Response.status(404).build();
+        }
+        else {
+            manager.deleteUser(id);
+            return Response.status(201).entity(user).build();
         }
     }
 }

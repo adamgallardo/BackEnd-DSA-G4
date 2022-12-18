@@ -105,4 +105,41 @@ public class SessionImpl implements Session {
 
         return null;
     }
+
+    @Override
+    public void deleteUser(Object entity) {
+        String deleteQuery = QueryHelper.createQueryDELETE(entity);
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(deleteQuery);
+            pstm.executeQuery();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public Object getById(Class theClass, String id) {
+        String selectByIdQuery = QueryHelper.createQuerySELECTById(theClass, id);
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectByIdQuery);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            Object entity = theClass.newInstance();
+            while(rs.next()){
+                for(int i=1; i<rsmd.getColumnCount()+1; i++){
+                    ObjectHelper.setter(entity, rsmd.getColumnName(i),rs.getObject(i));
+                }
+            }
+            return entity;
+        }
+        catch(SQLException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

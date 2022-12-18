@@ -34,10 +34,25 @@ public class QueryHelper {
 
         return sb.toString();
     }
-    public static String createQuerySELECTByName(Class theClass, String name){
+    public static String createQuerySELECTByName(Class theClass, String username){
         StringBuffer sb = new StringBuffer("");
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());
-        sb.append(" WHERE username = '").append(name).append("'");
+        sb.append(" WHERE username = '").append(username).append("'");
+        return sb.toString();
+    }
+    public static String createQueryDELETE(Object entity){
+        StringBuffer sb = new StringBuffer("");
+        String id = (ObjectHelper.getter(entity, "id").toString());
+        sb.append("DELETE FROM ").append(entity.getClass().getSimpleName());
+        sb.append(" WHERE id = '").append(id).append("'");
+
+        return sb.toString();
+    }
+    public static String createQuerySELECTById(Class theClass, String id){
+        StringBuffer sb = new StringBuffer("");
+        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
+        sb.append(" WHERE id = '").append(id).append("'");
+
         return sb.toString();
     }
 }

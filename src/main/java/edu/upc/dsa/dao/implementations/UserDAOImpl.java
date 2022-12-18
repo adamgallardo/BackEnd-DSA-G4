@@ -48,4 +48,21 @@ public class UserDAOImpl implements IUserDAO {
         }
         return null;
     }
+
+    @Override
+    public User getUserById(String id) {
+        User u = (User) this.session.getById(User.class, id);
+        if (u.getUsername() == null){
+            return null;
+        }
+        logger.info("Get user by id");
+        return u;
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        User user = (User) this.session.getById(User.class, id);
+        logger.info("Deleting the following user: " + user);
+        session.deleteUser(user);
+    }
 }
