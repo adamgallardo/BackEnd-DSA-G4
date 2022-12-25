@@ -118,16 +118,16 @@ public class UserService {
         }
     }
 
-    //Update username
+    //Change username
     @PUT
-    @ApiOperation(value = "Update the username", notes = "old username + new username")
+    @ApiOperation(value = "Change the username", notes = "old username + new username")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 405, message = "Username already in use"),
             @ApiResponse(code = 500, message = "Invalid credentials")
     })
-    @Path("/update/{oldUsername}{ newUsername}")
+    @Path("/updateUser/{oldUsername}{ newUsername}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUsername(@PathParam("oldUsername") String oldUsername, @PathParam("newUsername") String newUsername){
         User user = manager.getUserByName(oldUsername);
@@ -144,6 +144,35 @@ public class UserService {
         else {
             manager.updateUsername(oldUsername,newUsername);
             return Response.status(201).entity(user).build();
+        }
+    }
+
+    //Change password
+    @PUT
+    @ApiOperation(value = "Change the password", notes = "id + new password")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 407, message = "Wrong password"),
+            @ApiResponse(code = 500, message = "Invalid credentials")
+    })
+    @Path("/updatePassword/{id}{oldPassword}{ newPassword}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUsername(@PathParam("id") String id, @PathParam("oldPassword") String oldPassword,
+                                   @PathParam("newPassword") String newPassword){
+        User user = manager.getUserById(id);
+        if( oldPassword.isEmpty() || newPassword.isEmpty()){
+            return Response.status(500).build();
+        }
+        else if (user == null) {
+            return Response.status(404).build();
+        }
+        else if (user.getPassword().equals(oldPassword)){
+            manager.updatePassword(id, newPassword);
+            return Response.status(201).entity(user).build();
+        }
+        else {
+            return Response.status(407).build();
         }
     }
 }

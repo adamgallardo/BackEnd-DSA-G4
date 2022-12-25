@@ -1,4 +1,4 @@
-let URL='http://localhost:8080';//http://localhost:8080  http://147.83.7.206:8080
+let URL='http://147.83.7.206:8080';//http://localhost:8080  http://147.83.7.206:8080
 function signup() {
 
     var email = $('#email').val();
@@ -81,7 +81,7 @@ function updateUsername() {
     $.ajax({
         contentType: "application/json",
         type: 'PUT',
-        url: URL + '/dsaApp/user/update/' + oldUsername + newUsername,
+        url: URL + '/dsaApp/user/updateUser/' + oldUsername + newUsername,
         data: JSON.stringify({"oldUsername": oldUsername, "newUsername": newUsername}),
         dataType: 'json',
         success: function (result) {
@@ -98,6 +98,26 @@ function updateUsername() {
         }
     });
 }
-function changeLocation(){
-    window.location.href = "UpdateUsername.html";
+function updatePassword(){
+    var oldPassword = $('#oldPassword').val();
+    var newPassword = $('#newPassword').val();
+    var id = localStorage.getItem("id");
+    $.ajax({
+        contentType: "application/json",
+        type: 'PUT',
+        url: URL + '/dsaApp/user/updatePassword/' + id + oldPassword + newPassword,
+        data: JSON.stringify({"id": id, "oldPassword": oldPassword, "newPassword": newPassword}),
+        dataType: 'json',
+        success: function (result) {
+            alert("Done!");
+            window.location.href = "Main.html";
+        },
+        error: function (error) {
+            if (oldPassword == "" || newPassword == "")
+                alert("You left something blank. Please try again!");
+            else{
+                alert("Wrong password");
+            }
+        }
+    });
 }
