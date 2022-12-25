@@ -9,4 +9,5 @@ public interface Session<E> {
     Object getById(Class theClass, String id);
     List<Object> findAll(Class theClass);
     void close();
+    void update(Object object);
 }

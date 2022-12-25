@@ -117,4 +117,34 @@ public class UserService {
             return Response.status(201).entity(user).build();
         }
     }
+
+    //Update username
+    @PUT
+    @ApiOperation(value = "Update the username", notes = "old username + new username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 405, message = "Username already in use"),
+            @ApiResponse(code = 500, message = "Invalid credentials")
+    })
+    @Path("/update/{oldUsername}{ newUsername}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUsername(@PathParam("oldUsername") String oldUsername, @PathParam("newUsername") String newUsername){
+        User user = manager.getUserByName(oldUsername);
+        if( oldUsername.isEmpty() || newUsername.isEmpty()){
+            return Response.status(500).build();
+        }
+        else if (user == null) {
+            return Response.status(404).build();
+        }
+        User namecheck = this.manager.getUserByName(newUsername);
+        if (namecheck != null){
+            return Response.status(405).build();
+        }
+        else {
+            manager.updateUsername(oldUsername,newUsername);
+            return Response.status(201).entity(user).build();
+        }
+    }
 }
+

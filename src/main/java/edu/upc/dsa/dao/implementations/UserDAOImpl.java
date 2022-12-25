@@ -65,4 +65,31 @@ public class UserDAOImpl implements IUserDAO {
         logger.info("Deleting the following user: " + user);
         session.deleteUser(user);
     }
+
+    @Override
+    public User updateUsername(String oldUsername, String newUsername) {
+        User user = (User) this.session.getByUsername(User.class, oldUsername);
+        logger.info("Changing the following username: "+oldUsername+" for: "+newUsername);
+        user.setUsername(newUsername);
+        this.session.update(user);
+        return user;
+    }
+
+    @Override
+    public User updateCoins(String username, Integer coins) {
+        User user = (User) this.session.getByUsername(User.class, username);
+        logger.info("Updating coins");
+        user.setCoins(coins);
+        this.session.update(user);
+        return user;
+    }
+
+    @Override
+    public User updatePassword(String id, String newPassword) {
+        User user = (User) this.session.getById(User.class, id);
+        logger.info("Changing password");
+        user.setPassword(newPassword);
+        this.session.update(user);
+        return user;
+    }
 }

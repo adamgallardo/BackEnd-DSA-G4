@@ -55,4 +55,18 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    public static String createQueryUPDATE(Object object){
+        StringBuffer sb = new StringBuffer("UPDATE ");
+        sb.append(object.getClass().getSimpleName());
+        sb.append(" SET ");
+        String id = (ObjectHelper.getter(object,"id").toString());
+        String [] fields = ObjectHelper.getFields(object);
+        for(String field: fields){
+            sb.append(field).append(" = ?,");
+        }
+        //This part is for deleting the last coma
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append(" WHERE id = '").append(id).append("'");
+        return sb.toString();
+    }
 }

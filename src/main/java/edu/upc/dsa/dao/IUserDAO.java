@@ -8,4 +8,7 @@ public interface IUserDAO {
     User getUserByEmail(String email);
     User getUserById(String id);
     void deleteUser(String id);
+    User updateUsername(String oldUsername, String newUsername);
+    User updateCoins(String username, Integer coins);
+    User updatePassword(String id, String newPassword);
 }

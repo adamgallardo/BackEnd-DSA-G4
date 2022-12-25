@@ -137,9 +137,26 @@ public class SessionImpl implements Session {
             }
             return entity;
         }
-        catch(SQLException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        catch(SQLException | InstantiationException | IllegalAccessException ex) {
+            ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void update(Object object) {
+        String updateQuery = QueryHelper.createQueryUPDATE(object);
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(updateQuery);
+            int i = 1;
+            for (String field: ObjectHelper.getFields(object)) {
+                pstm.setObject(i++,ObjectHelper.getter(object, field));
+            }
+            pstm.executeQuery();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }
