@@ -39,9 +39,6 @@ function login() {
         data: JSON.stringify({ "username": username, "password": password }),
         dataType: 'json',
         success: function(result){
-            console.log(result);
-            alert("Inicio de sesión correcto");
-            console.log(result);
             localStorage.setItem("activeUser", username);
             localStorage.setItem("id", result.id);
             localStorage.setItem("coins", result.coins);
@@ -49,9 +46,9 @@ function login() {
         },
         error: function(error){
             if (username == "" || password == "")
-                alert("No has rellenado algun campo");
+                alert("You left something blank. Please try again!");
             else{
-                alert("Error");
+                alert("Wrong username or password. Please try again!");
             }
         }
     });
@@ -85,7 +82,6 @@ function updateUsername() {
         data: JSON.stringify({"oldUsername": oldUsername, "newUsername": newUsername}),
         dataType: 'json',
         success: function (result) {
-            alert("Done!");
             localStorage.setItem("activeUser", newUsername);
             window.location.href = "Main.html";
         },
@@ -109,7 +105,6 @@ function updatePassword(){
         data: JSON.stringify({"id": id, "oldPassword": oldPassword, "newPassword": newPassword}),
         dataType: 'json',
         success: function (result) {
-            alert("Done!");
             window.location.href = "Main.html";
         },
         error: function (error) {
@@ -121,3 +116,4 @@ function updatePassword(){
         }
     });
 }
+
