@@ -16,7 +16,7 @@ public class User {
         this.username=username;
         this.password=password;
         this.id=RandomUtils.getId();
-        this.coins=0;
+        this.coins=100;
     }
 
     //Constructor vacío para la API REST
