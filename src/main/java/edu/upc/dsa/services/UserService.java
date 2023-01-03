@@ -3,6 +3,7 @@ package edu.upc.dsa.services;
 import edu.upc.dsa.dao.IUserDAO;
 import edu.upc.dsa.dao.implementations.UserDAOImpl;
 import edu.upc.dsa.models.LogIn;
+import edu.upc.dsa.models.PasswordUpdate;
 import edu.upc.dsa.models.SignUp;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
@@ -127,7 +128,7 @@ public class UserService {
             @ApiResponse(code = 405, message = "Username already in use"),
             @ApiResponse(code = 500, message = "Invalid credentials")
     })
-    @Path("/updateUser/{oldUsername}{ newUsername}")
+    @Path("/updateUser/{oldUsername}/{newUsername}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUsername(@PathParam("oldUsername") String oldUsername, @PathParam("newUsername") String newUsername){
         User user = manager.getUserByName(oldUsername);
@@ -156,19 +157,18 @@ public class UserService {
             @ApiResponse(code = 407, message = "Wrong password"),
             @ApiResponse(code = 500, message = "Invalid credentials")
     })
-    @Path("/updatePassword/{id}{oldPassword}{ newPassword}")
+    @Path("/updatePassword")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUsername(@PathParam("id") String id, @PathParam("oldPassword") String oldPassword,
-                                   @PathParam("newPassword") String newPassword){
-        User user = manager.getUserById(id);
-        if( oldPassword.isEmpty() || newPassword.isEmpty()){
+    public Response updatePassword(PasswordUpdate passwordUpdateCred){
+        User user = manager.getUserById(passwordUpdateCred.getId());
+        if( passwordUpdateCred.getOldPassword().isEmpty() || passwordUpdateCred.getNewPassword().isEmpty()){
             return Response.status(500).build();
         }
         else if (user == null) {
             return Response.status(404).build();
         }
-        else if (user.getPassword().equals(oldPassword)){
-            manager.updatePassword(id, newPassword);
+        else if (user.getPassword().equals(passwordUpdateCred.getOldPassword())){
+            manager.updatePassword(passwordUpdateCred.getId(), passwordUpdateCred.getNewPassword());
             return Response.status(201).entity(user).build();
         }
         else {

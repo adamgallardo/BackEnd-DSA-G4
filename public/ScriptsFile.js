@@ -78,7 +78,7 @@ function updateUsername() {
     $.ajax({
         contentType: "application/json",
         type: 'PUT',
-        url: URL + '/dsaApp/user/updateUser/' + oldUsername + newUsername,
+        url: URL + '/dsaApp/user/updateUser/' + oldUsername +'/'+ newUsername,
         data: JSON.stringify({"oldUsername": oldUsername, "newUsername": newUsername}),
         dataType: 'json',
         success: function (result) {
@@ -101,7 +101,7 @@ function updatePassword(){
     $.ajax({
         contentType: "application/json",
         type: 'PUT',
-        url: URL + '/dsaApp/user/updatePassword/' + id + oldPassword + newPassword,
+        url: URL + '/dsaApp/user/updatePassword',
         data: JSON.stringify({"id": id, "oldPassword": oldPassword, "newPassword": newPassword}),
         dataType: 'json',
         success: function (result) {
