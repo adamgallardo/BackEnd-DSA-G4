@@ -1,6 +1,6 @@
 package edu.upc.dsa.dao.implementations;
 
-import edu.upc.dsa.dao.Session;
+import edu.upc.dsa.dao.SessionDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class FactorySession {
-    public static Session openSession() {
+    public static SessionDAO openSession() {
 
 
         Connection conn = getConnection();
 
-        Session session = new SessionImpl(conn);
+        SessionDAO session = new SessionImpl(conn);
 
         return session;
     }

@@ -1,6 +1,6 @@
 package edu.upc.dsa.dao.implementations;
 
-import edu.upc.dsa.dao.Session;
+import edu.upc.dsa.dao.SessionDAO;
 import edu.upc.dsa.util.ObjectHelper;
 import edu.upc.dsa.util.QueryHelper;
 
@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-public class SessionImpl implements Session {
+public class SessionImpl<E> implements SessionDAO<E> {
 
     private final Connection conn;
     private static SessionImpl instance;
@@ -46,7 +46,7 @@ public class SessionImpl implements Session {
     }
 
     @Override
-    public Object getByUsername(Class theClass, String username) {
+    public Object getByName(Class theClass, String username) {
         String query = QueryHelper.createQuerySELECTByName(theClass, username);
         PreparedStatement pstm = null;
         try {
@@ -80,10 +80,10 @@ public class SessionImpl implements Session {
     }
 
     @Override
-    public List<Object> findAll(Class theClass) {
+    public List<E> findAll(Class theClass) {
         String selectAllQuery = QueryHelper.createQuerySELECTAll(theClass);
         PreparedStatement pstm = null;
-        List<Object> result = new LinkedList<Object>();
+        List<E> result = new LinkedList<E>();
 
         try {
             pstm = conn.prepareStatement(selectAllQuery);
@@ -96,7 +96,7 @@ public class SessionImpl implements Session {
                 for (int i = 1; i<rsmd.getColumnCount() + 1; i++) {
                     ObjectHelper.setter(entity,rsmd.getColumnName(i),rs.getObject(i));
                 }
-                result.add(entity);
+                result.add((E) entity);
             }
             return result;
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
@@ -107,7 +107,7 @@ public class SessionImpl implements Session {
     }
 
     @Override
-    public void deleteUser(Object entity) {
+    public void delete(Object entity) {
         String deleteQuery = QueryHelper.createQueryDELETE(entity);
         PreparedStatement pstm = null;
 

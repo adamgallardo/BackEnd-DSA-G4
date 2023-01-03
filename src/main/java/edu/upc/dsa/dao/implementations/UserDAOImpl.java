@@ -32,7 +32,7 @@ public class UserDAOImpl implements IUserDAO {
     }
     @Override
     public User getUserByName(String username){
-        User u = (User) this.session.getByUsername(User.class, username);
+        User u = (User) this.session.getByName(User.class, username);
         if (u.getUsername() == null){
             return null;
         }
@@ -63,12 +63,12 @@ public class UserDAOImpl implements IUserDAO {
     public void deleteUser(String id) {
         User user = (User) this.session.getById(User.class, id);
         logger.info("Deleting the following user: " + user);
-        session.deleteUser(user);
+        session.delete(user);
     }
 
     @Override
     public User updateUsername(String oldUsername, String newUsername) {
-        User user = (User) this.session.getByUsername(User.class, oldUsername);
+        User user = (User) this.session.getByName(User.class, oldUsername);
         logger.info("Changing the following username: "+oldUsername+" for: "+newUsername);
         user.setUsername(newUsername);
         this.session.update(user);
@@ -77,7 +77,7 @@ public class UserDAOImpl implements IUserDAO {
 
     @Override
     public User updateCoins(String username, Integer coins) {
-        User user = (User) this.session.getByUsername(User.class, username);
+        User user = (User) this.session.getByName(User.class, username);
         logger.info("Updating coins");
         user.setCoins(coins);
         this.session.update(user);
