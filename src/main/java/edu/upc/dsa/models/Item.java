@@ -8,7 +8,7 @@ public class Item {
     private int heal;
     private int price;
 
-    private String icon;
+    private String image;
 
     public Item(){} //constructor vacío
 
@@ -36,7 +36,7 @@ public class Item {
 
     public String getName(){return name;}
 
-    public String getIcon() {return icon;}
+    public String getIcon() {return image;}
 
     public int getDamage(){return damage;}
 
@@ -52,7 +52,7 @@ public class Item {
 
     public void setName(String name) {this.name = name;}
 
-    public void setIcon(String icon) {this.icon = icon;}
+    public void setIcon(String icon) {this.image = image;}
 
     public void setPrice(int price) {
         this.price = price;
@@ -71,6 +71,6 @@ public class Item {
                 "price:" + price + '\'' +
                 "damage"+ damage + '\'' +
                 "heal" + heal + '\'' +
-                "icon" + icon + "}";
+                "image" + image + "}";
     }
 }

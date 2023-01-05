@@ -116,4 +116,35 @@ function updatePassword(){
         }
     });
 }
+function getItemsList(){
+    $.ajax({
+        type: 'GET',
+        url: "/dsaApp/item/itemsList",
+        dataType: 'json',
+        success: function (result) {
+            let content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th><th>image</th></tr>";
+            for (let i = 0; i < result.length; i++) {
+                content += '<tr><td>' + '<img src = ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
+                    '</td><td>' + result[i].function +
+                    '</td><td>' + result[i].description +
+                    '</td><td>' + result[i].price.toString() +
+                    '</td><td>' + '<button type = "button" id ="' + result[i].name +  '</td> </tr>';
+                    //*'"onclick="PurchaseItem(this.id)">Buy</button>' + '</td> </tr>';
+            }
+            content += "</table>"
+            $('itemsTable').append(content);
+
+        },
+        error: function (error) {
+            alert("Unable to get Shop data.");
+            window.location.href = "Main.html";
+        },
+    })
+};
+
+
+
+//function PurchaseItem (item){};
+
+
 

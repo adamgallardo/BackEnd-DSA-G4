@@ -56,7 +56,7 @@ public class StoreService {
             List<Item> storeList = this.itemManager.getItems();
             GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
             return Response.status(200).entity(entity).build();
-        }
+        } //añadir respuesta en caso de que vaya mal.
 
         //get de todos los items del inventario de un usuario
         @GET
