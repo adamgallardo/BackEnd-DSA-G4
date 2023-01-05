@@ -18,6 +18,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.beans.IntrospectionException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,7 +54,13 @@ public class StoreService {
         @Produces(MediaType.APPLICATION_JSON)
         public Response getStoreItems() {
 
-            List<Item> storeList = this.itemManager.getItems();
+            List<Item> storeList = this.itemManager.getItems();  // new ArrayList<>(); //this.itemManager.getItems();
+           /* storeList.add(new Item( "I1", "1111", "DESC1", 100, 10, 0, "candycanes.png"));
+            storeList.add(new Item( "I2", "2222", "DESC2", 200, 20, 5, "gift.png"));
+            storeList.add(new Item( "I1", "3331", "DESC3", 500, 10, 0, "coal"));
+            storeList.add(new Item( "I1", "4444", "DESC4", 600, 0, 0, "cookie"));
+            storeList.add(new Item( "I1", "juan", "DESC1", 100, 10, 0, "candycanes"));
+            storeList.add(new Item( "I1", "m1gu3l", "DESC1", 150, 10, 4, "candycanes"));*/
             GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(storeList) {};
             return Response.status(200).entity(entity).build();
         } //añadir respuesta en caso de que vaya mal.

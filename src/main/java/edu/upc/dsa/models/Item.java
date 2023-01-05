@@ -12,13 +12,14 @@ public class Item {
 
     public Item(){} //constructor vacío
 
-    public Item(String id, String name, String description, int price, int damage, int heal){
+    public Item(String id, String name, String description, int price, int damage, int heal, String image){
         this.description = description;
         this.name = name;
         this.damage = damage;
         this.heal = heal;
         this.id = id;
         this.price = price;
+        this.image = image;
     }
 
     //Getters

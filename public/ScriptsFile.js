@@ -1,4 +1,4 @@
-let URL='http://147.83.7.206:8080';//http://localhost:8080  http://147.83.7.206:8080
+let URL='http://localhost:8080';//http://localhost:8080  http://147.83.7.206:8080
 function signup() {
 
     var email = $('#email').val();
@@ -121,28 +121,26 @@ function getItemsList(){
         type: 'GET',
         url: "/dsaApp/item/itemsList",
         dataType: 'json',
-        success: function (result) {
+        success:function (result) {
             let content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th><th>image</th></tr>";
             for (let i = 0; i < result.length; i++) {
-                content += '<tr><td>' + '<img src = ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
-                    '</td><td>' + result[i].function +
-                    '</td><td>' + result[i].description +
-                    '</td><td>' + result[i].price.toString() +
-                    '</td><td>' + '<button type = "button" id ="' + result[i].name +  '</td> </tr>';
-                    //*'"onclick="PurchaseItem(this.id)">Buy</button>' + '</td> </tr>';
-            }
-            content += "</table>"
-            $('itemsTable').append(content);
+               //content += '<tr><td>' + '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
+                $("#itemsTable").append(
+                    "<tr> <td>" + result[i].name +
+                    "</td> <td>" + result[i].description +
+                    "</td> <td>" + result[i].price +
+                   "</td><td>" +  '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' + "</td></tr>" +
+                    '</td><td>' + '<button type = "button" id ="' + result[i].name + '"' + '"onclick="PurchaseItem(this.id)">Purchase</button>' + '</td> </tr>');
 
-        },
+            }},
+
         error: function (error) {
-            alert("Unable to get Shop data.");
+            alert("Unable to get Shop data." + error);
+            console.log(error);
             window.location.href = "Main.html";
-        },
+        }
     })
-};
-
-
+}
 
 //function PurchaseItem (item){};
 
