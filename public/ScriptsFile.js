@@ -143,6 +143,31 @@ function getItemsList(){
 }
 
 //function PurchaseItem (item){};
+function getRanking(){
+    $.ajax({
+        type: 'GET',
+        url: "/dsaApp/match/ranking",
+        dataType: 'json',
+        success:function (result) {
+            //let content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th><th>image</th></tr>";
+            for (let i = 0; i < result.length; i++) {
+                //content += '<tr><td>' + '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
+                $("#rankingTable").append(
+                    "<tr> <td>" + result[i].UserName +
+                    "</td> <td>" + result[i].points + '</td> </tr>');
+                   /* "</td> <td>" + result[i].price +
+                    "</td><td>" +  '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' + "</td></tr>" +
+                    '</td><td>' + '<button type = "button" id ="' + result[i].name + '"' + '"onclick="PurchaseItem(this.id)">Purchase</button>' + '</td> </tr>');*/
+
+            }},
+
+        error: function (error) {
+            alert("Unable to get Shop data." + error);
+            console.log(error);
+            window.location.href = "Main.html";
+        }
+    })
+}
 
 
 

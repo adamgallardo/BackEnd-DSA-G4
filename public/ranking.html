@@ -2,9 +2,183 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Where is Santa's beard?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="ScriptsFile.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            min-height: 100vh;
+        }
+        nav{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            height: 70px;
+            background: darkred;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+        }
+        nav .navbar{
+            height: 100%;
+            max-width: 1250px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: auto;
+            padding: 0 50px;
+        }
+        .navbar .logo a{
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        nav .navbar .nav-links{
+            line-height: 70px;
+            height: 100%;
+        }
+        nav .navbar .links{
+            display: flex;
+        }
+        nav .navbar .links li{
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            list-style: none;
+            padding: 0 14px;
+        }
+        nav .navbar .links li a{
+            height: 100%;
+            text-decoration: none;
+            white-space: nowrap;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .links li:hover .js-arrow{
+            transform: rotate(180deg);
+        }
+        nav .navbar .links li .arrow{
+            height: 100%;
+            width: 22px;
+            line-height: 70px;
+            text-align: center;
+            display: inline-block;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        nav .navbar .links li .sub-menu{
+            position: absolute;
+            top: 75px;
+            left: -100px;
+            line-height: 40px;
+            background: darkred;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 4px 4px;
+            display: none;
+            z-index: 2;
+        }
+        nav .navbar .links li .sub-menu::before{
+            content: '';
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            background: darkred;
+            right: 30px;
+            top: -10px;
+            transform: rotate(45deg);
+
+        }
+        nav .navbar .links li:hover .js-sub-menu{
+            display: block;
+        }
+        .navbar .links li .sub-menu li{
+            padding: 0 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .navbar .links li .sub-menu a{
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        @media (max-width:920px) {
+            nav .navbar{
+                max-width: 100%;
+                padding: 0 25px;
+            }
+
+            nav .navbar .logo a{
+                font-size: 27px;
+            }
+            nav .navbar .links li{
+                padding: 0 10px;
+                white-space: nowrap;
+            }
+            nav .navbar .links li a{
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
-<body>
+<body onload="getRanking();">
+<nav>
+    <div class="navbar">
+        <div class="logo"><a href="#">Where is Santa's beard?</a></div>
+        <div class="nav-links">
+            <ul class="links">
+                <li><a href="Main.html"><i class="fa fa-fw fa-home"></i> HOME</a></li>
+                <li>
+                    <a href="#">+</a>
+                    <i class='bx bxs-chevron-down js-arrow arrow '></i>
+                    <ul class="js-sub-menu sub-menu">
+                        <li><a href="UpdateUsername.html" ><i class="fa fa-user-edit"></i> New username</a></li>
+                        <li><a href="UpdatePassword.html" ><i class="fa fa-key"></i> New password</a></li>
+                        <li><a href="store.html" ><i class="fa fa-shopping-cart"></i> Store</a></li>
+                        <li><a href="ranking.html" ><i class="fa fa-shopping-cart"></i> Ranking</a></li>
+                        <li><a href="#" onclick="eradicate()"><i class="fa fa-fw fa-trash-alt"></i> Delete</a></li>
+                        <li><a href="#" onclick="logout()"><i class="fa fa-fw fa-sign-out-alt"></i> Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container" id="idContainer">
+    <br><br><br><br><br><br><br><br>
+    <h1 align="center">RANKING</h1>
+    <br><br><br>
+    <table id = "t2" style="width:100%">
+        <tr>
+            <th>User Name</th>
+            <th>Points</th>
+        </tr>
+    </table>
+    <table class="table table-hover" id="rankingTable" >
+
+    </table>
+</div>
 
 </body>
 </html>
