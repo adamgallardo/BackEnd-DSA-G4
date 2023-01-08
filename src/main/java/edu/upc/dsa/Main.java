@@ -32,7 +32,7 @@ public class Main {
 
         BeanConfig beanConfig = new BeanConfig();
 
-        beanConfig.setHost("localhost:8080"); //147.83.7.206:8080  localhost:8080
+        beanConfig.setHost("147.83.7.206:8080"); //147.83.7.206:8080  localhost:8080
         beanConfig.setBasePath("/dsaApp");
         beanConfig.setContact("support@example.com");
         beanConfig.setDescription("REST API for GameManager");
