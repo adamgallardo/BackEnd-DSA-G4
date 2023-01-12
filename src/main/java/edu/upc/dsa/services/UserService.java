@@ -175,5 +175,18 @@ public class UserService {
             return Response.status(407).build();
         }
     }
+
+    @PUT
+    @ApiOperation(value = "Change the language used by user", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful")
+    })
+    @Path("/setLanguage/{langCode}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateLanguageUsedByUser(@PathParam("langCode") String langCode){
+        System.out.println("The language used by player is : " + langCode);
+        return Response.status(200).build();
+    }
+
 }
 
