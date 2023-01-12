@@ -1,4 +1,4 @@
-let URL='http://147.83.7.206:8080';//http://localhost:8080  http://147.83.7.206:8080
+let URL='http://localhost:8080';//http://localhost:8080  http://147.83.7.206:8080
 function signup() {
 
     var email = $('#email').val();
@@ -124,12 +124,13 @@ function getItemsList(){
         success:function (result) {
             let content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th><th>image</th></tr>";
             for (let i = 0; i < result.length; i++) {
+                var url = result[i].image;
                //content += '<tr><td>' + '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
                 $("#itemsTable").append(
                     "<tr> <td>" + result[i].name +
                     "</td> <td>" + result[i].description +
                     "</td> <td>" + result[i].price +
-                   "</td><td>" +  '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' + "</td></tr>" +
+                   "</td><td>" +  '<img src ="images/'+url+'.png" width="30" height="30">' + "</td></tr>" +
                     '</td><td>' + '<button type = "button" id ="' + result[i].name + '"' + '"onclick="PurchaseItem(this.id)">Purchase</button>' + '</td> </tr>');
 
             }},
