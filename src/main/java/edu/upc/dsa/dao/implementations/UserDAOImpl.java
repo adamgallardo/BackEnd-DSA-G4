@@ -92,4 +92,13 @@ public class UserDAOImpl implements IUserDAO {
         this.session.update(user);
         return user;
     }
+
+    @Override
+    public User updateImage(String id, Integer newImage) {
+        User user = (User) this.session.getById(User.class, id);
+        logger.info("Changing profile image");
+        user.setImage(newImage);
+        this.session.update(user);
+        return user;
+    }
 }

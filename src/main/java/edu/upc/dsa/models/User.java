@@ -9,6 +9,7 @@ public class User {
     private String password;
     private String email;
     private Integer coins;
+    private Integer image;
 
     //Constructor para inicializar las variables
     public User( String username, String password, String email){
@@ -17,6 +18,7 @@ public class User {
         this.password=password;
         this.id=RandomUtils.getId();
         this.coins=100;
+        this.image=0;
     }
 
     //Constructor vacío para la API REST
@@ -38,5 +40,11 @@ public class User {
     }
     public void setCoins(Integer coins) {
         this.coins = coins;
+    }
+    public Integer getImage() {
+        return image;
+    }
+    public void setImage(Integer image) {
+        this.image = image;
     }
 }

@@ -175,5 +175,29 @@ public class UserService {
             return Response.status(407).build();
         }
     }
+
+    //Change profile image
+    @PUT
+    @ApiOperation(value = "Change the password", notes = "id + new password")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Invalid credentials")
+    })
+    @Path("/updateImage/{id}/{newImage}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateImage(@PathParam("id") String id, @PathParam("newImage") Integer newImage){
+        User user = manager.getUserById(id);
+        if(id.isEmpty()|| newImage == null){
+            return Response.status(500).build();
+        }
+        else if (user == null) {
+            return Response.status(404).build();
+        }
+        else {
+            manager.updateImage(id, newImage);
+            return Response.status(201).entity(user).build();
+        }
+    }
 }
 

@@ -11,4 +11,5 @@ public interface IUserDAO {
     User updateUsername(String oldUsername, String newUsername);
     User updateCoins(String username, Integer coins);
     User updatePassword(String id, String newPassword);
+    User updateImage(String id, Integer newImage);
 }

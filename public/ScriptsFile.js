@@ -42,6 +42,7 @@ function login() {
             localStorage.setItem("activeUser", username);
             localStorage.setItem("id", result.id);
             localStorage.setItem("coins", result.coins);
+            localStorage.setItem("image",result.image);
             window.location.href = "Main.html";
         },
         error: function(error){
@@ -118,6 +119,82 @@ if(localStorage.getItem("activeUser")!=null) {
                 else {
                     alert("Wrong password");
                 }
+            }
+        });
+    }
+
+    function image1(){
+        var id = localStorage.getItem("id");
+        var newImage = 1;
+        $.ajax({
+            contentType: "application/json",
+            type: 'PUT',
+            url: URL + '/dsaApp/user/updateImage/' + id + '/' + newImage,
+            data: JSON.stringify({"id": id, "newImage": newImage}),
+            dataType: 'json',
+            success: function (result) {
+                localStorage.setItem("image", newImage);
+                window.location.href = "Main.html";
+            },
+            error: function (error) {
+                alert("Something went wrong. Please try again!");
+            }
+        });
+    }
+
+    function image2() {
+        var id = localStorage.getItem("id");
+        var newImage = 2;
+        $.ajax({
+            contentType: "application/json",
+            type: 'PUT',
+            url: URL + '/dsaApp/user/updateImage/' + id + '/' + newImage,
+            data: JSON.stringify({"id": id, "newImage": newImage}),
+            dataType: 'json',
+            success: function (result) {
+                localStorage.setItem("image", newImage);
+                window.location.href = "Main.html";
+            },
+            error: function (error) {
+                alert("Something went wrong. Please try again!");
+            }
+        });
+    }
+
+    function image3(){
+        var id = localStorage.getItem("id");
+        var newImage = 3;
+        $.ajax({
+            contentType: "application/json",
+            type: 'PUT',
+            url: URL + '/dsaApp/user/updateImage/' + id + '/' + newImage,
+            data: JSON.stringify({"id": id, "newImage": newImage}),
+            dataType: 'json',
+            success: function (result) {
+                localStorage.setItem("image", newImage);
+                window.location.href = "Main.html";
+            },
+            error: function (error) {
+                alert("Something went wrong. Please try again!");
+            }
+        });
+    }
+
+    function image4(){
+        var id = localStorage.getItem("id");
+        var newImage = 4;
+        $.ajax({
+            contentType: "application/json",
+            type: 'PUT',
+            url: URL + '/dsaApp/user/updateImage/' + id + '/' + newImage,
+            data: JSON.stringify({"id": id, "newImage": newImage}),
+            dataType: 'json',
+            success: function (result) {
+                localStorage.setItem("image", newImage);
+                window.location.href = "Main.html";
+            },
+            error: function (error) {
+                alert("Something went wrong. Please try again!");
             }
         });
     }
