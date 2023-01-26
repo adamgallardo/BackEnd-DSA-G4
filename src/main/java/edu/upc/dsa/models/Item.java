@@ -53,7 +53,7 @@ public class Item {
 
     public void setName(String name) {this.name = name;}
 
-    public void setIcon(String icon) {this.image = image;}
+    public void setIcon(String image) {this.image = image;}
 
     public void setPrice(int price) {
         this.price = price;
