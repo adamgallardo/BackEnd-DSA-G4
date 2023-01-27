@@ -1,4 +1,4 @@
-let URL='http://147.83.7.206:8080';//http://localhost:8080  http://147.83.7.206:8080
+let URL='http://localhost:8080';//http://localhost:8080  http://147.83.7.206:8080
 function signup() {
 
     var email = $('#email').val();
@@ -199,24 +199,22 @@ if(localStorage.getItem("activeUser")!=null) {
         });
     }
 
-    function getItemsList() {
+    function getItemsList(){
         $.ajax({
             type: 'GET',
             url: "/dsaApp/item/itemsList",
             dataType: 'json',
-            success: function (result) {
-                let content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th><th>image</th></tr>";
+            success:function (result) {
                 for (let i = 0; i < result.length; i++) {
-                    //content += '<tr><td>' + '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
+                    console.log("i: "+i, result[i]);
                     $("#itemsTable").append(
                         "<tr> <td>" + result[i].name +
                         "</td> <td>" + result[i].description +
                         "</td> <td>" + result[i].price +
-                        "</td><td>" + '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' + "</td></tr>" +
-                        '</td><td>' + '<button type = "button" id ="' + result[i].name + '"' + '"onclick="PurchaseItem(this.id)">Purchase</button>' + '</td> </tr>');
+                        "</td><td>" +  '<img src ="images/' + result[i].image + '.png" width = "100" height ="100">' + "</td></tr>" +
+                        '</td><td>' + '<button type = "button" class = "button" onclick="PurchaseItem(result[i].name)">Purchase</button>' + '</td> </tr>');
 
-                }
-            },
+                }},
 
             error: function (error) {
                 alert("Unable to get Shop data." + error);
@@ -226,31 +224,62 @@ if(localStorage.getItem("activeUser")!=null) {
         })
     }
 
-//function PurchaseItem (item){};
     function getRanking() {
         $.ajax({
             type: 'GET',
             url: "/dsaApp/match/ranking",
             dataType: 'json',
             success: function (result) {
-                //let content = "<table><tr><th></th><th>Name</th><th>Description</th><th>Price</th><th>image</th></tr>";
                 for (let i = 0; i < result.length; i++) {
-                    //content += '<tr><td>' + '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' +
                     $("#rankingTable").append(
                         "<tr> <td>" + result[i].UserName +
-                        "</td> <td>" + result[i].points + '</td> </tr>');
-                    /* "</td> <td>" + result[i].price +
-                     "</td><td>" +  '<img src ="images/' + result[i].image + '.png" alt="Image" style="width:30% height:30%">' + "</td></tr>" +
-                     '</td><td>' + '<button type = "button" id ="' + result[i].name + '"' + '"onclick="PurchaseItem(this.id)">Purchase</button>' + '</td> </tr>');*/
-
+                        "</td> <td>" + result[i].points + "</td> </tr>");
                 }
             },
 
             error: function (error) {
-                alert("Unable to get Shop data." + error);
+                alert("Unable to get Leaderboard data." + error);
                 console.log(error);
-                window.location.href = "Main.html";
+
             }
+        })
+    }
+    function getInventoryList(){
+        var userid = localStorage.getItem("id");
+        $.ajax({
+            type: 'GET',
+            url: "/dsaApp/item/inventory" + userid,
+            dataType: 'json',
+            success: function (result) {
+                for (let i = 0; i < result.length; i++) {
+                    $("#inventoryTable").append(
+                        "<tr> <td>" + result[i].name +
+                        "</td> <td>" + result[i].description +
+                        "</td><td>" +  '<img src ="images/' + result[i].image + '.png" width = "100" height ="100">' + "</td></tr>");
+                }
+            },
+
+            error: function (error) {
+                alert("Unable to get Inventory data." + error);
+                console.log(error);
+            }
+        })
+
+    };
+
+    function PurchaseItem(item) {
+        var UserName = localStorage.getItem("activeUser");
+        var ItemName = item;
+        $.ajax({
+            type: 'PUT',
+            url: "dsaApp/item/PurchaseItem/" + ItemName + "/" + UserName,
+            dataType: 'json',
+            success: function (result) {
+                alert(ItemName + 'bought succesfully');
+            },
+            error: function (error) {
+                alert('Purchase failed, check if you have enough coins');
+            },
         })
     }
 }

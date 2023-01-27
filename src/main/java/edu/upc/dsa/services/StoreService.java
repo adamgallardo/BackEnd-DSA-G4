@@ -72,15 +72,15 @@ public class StoreService {
                 @ApiResponse(code = 200, message = "Successful", response = Item.class),
                 @ApiResponse(code = 404, message = "User not found")
         })
-        @Path("inventory/{UserName}")
+        @Path("inventory/{UserId}")
         @Produces(MediaType.APPLICATION_JSON)
-        public Response getInventoryList(@PathParam("UserName") String UserName) {
+        public Response getInventoryList(@PathParam("UserId") String UserId) {
 
-            User user = userManager.getUserByName(UserName);
+            User user = userManager.getUserById(UserId);
             if (user == null) {
                 return Response.status(404).build();
             } else {
-                List<Item> inventory = this.inventoryManager.getUserInventory(user.getId());
+                List<Item> inventory = this.inventoryManager.getUserInventory(UserId);
                 GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(inventory) {};
                 return Response.status(200).entity(entity).build();
             }

@@ -32,8 +32,8 @@ public class MatchDAOImpl implements MatchDAO {
     @Override
     public List<Match> getRanking() {
         List<Match> matchList = this.session.findAll(Match.class);
-        List<Match> ranking = matchList.stream().sorted(Comparator.comparing(Match::getPoints).reversed()).collect(Collectors.toList());
-        return ranking;
+       // List<Match> ranking = matchList.stream().sorted(Comparator.comparing(Match::getPoints).reversed()).collect(Collectors.toList());
+        return matchList;
     }
 
     @Override

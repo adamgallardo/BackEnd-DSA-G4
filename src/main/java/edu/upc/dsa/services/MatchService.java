@@ -40,17 +40,17 @@ public class MatchService {
     @GET
     @ApiOperation(value = "Get ranking!", notes = " ")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Item.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = Match.class, responseContainer="List"),
     })
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRanking() {
 
-        List<Match> ranking =this.matchManager.getRanking();  // new ArrayList<>(); //this.matchManager.getRanking();
+        List<Match> ranking =this.matchManager.getRanking(); // new ArrayList<>(); //this.matchManager.getRanking();
 
-           /* ranking.add(new Match( "I1", 1111));
-            ranking.add(new Match( "I2", 2222));
-            ranking.add(new Match( "I1", 3331));*/
+            /*ranking.add(new Match( "maria", 150));
+            ranking.add(new Match( "bjo", 120));
+            ranking.add(new Match( "juan", 110));*/
 
         GenericEntity<List<Match>> entity = new GenericEntity<List<Match>>(ranking) {};
         return Response.status(200).entity(entity).build();

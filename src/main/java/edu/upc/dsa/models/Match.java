@@ -24,7 +24,7 @@ public class Match {
     //Setters
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.UserName = userName;
     }
 
     public void setPoints(int points) {

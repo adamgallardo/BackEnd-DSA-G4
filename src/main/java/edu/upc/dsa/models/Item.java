@@ -37,7 +37,7 @@ public class Item {
 
     public String getName(){return name;}
 
-    public String getIcon() {return image;}
+    public String getImage() {return image;}
 
     public int getDamage(){return damage;}
 
@@ -53,7 +53,7 @@ public class Item {
 
     public void setName(String name) {this.name = name;}
 
-    public void setIcon(String image) {this.image = image;}
+    public void setImage(String image) {this.image = image;}
 
     public void setPrice(int price) {
         this.price = price;
