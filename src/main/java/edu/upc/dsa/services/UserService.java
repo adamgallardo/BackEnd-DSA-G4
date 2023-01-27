@@ -1,6 +1,9 @@
 package edu.upc.dsa.services;
 
+import edu.upc.dsa.dao.IIssueDAO;
 import edu.upc.dsa.dao.IUserDAO;
+import edu.upc.dsa.dao.implementations.IssueDAOImpl;
+import edu.upc.dsa.models.Issue;
 import edu.upc.dsa.dao.QueryDAO;
 import edu.upc.dsa.dao.implementations.QueryDAOImpl;
 import edu.upc.dsa.dao.implementations.UserDAOImpl;
@@ -21,9 +24,12 @@ public class UserService {
     private IUserDAO manager;
     private QueryDAO queryDAO;
 
+    private IIssueDAO issueManager;
+
     public UserService(){
         this.manager = UserDAOImpl.getInstance();
         this.queryDAO = QueryDAOImpl.getInstance();
+        this.issueManager = IssueDAOImpl.getInstance();
     }
 
     // Sign Up
@@ -179,7 +185,7 @@ public class UserService {
 
     //Change profile image
     @PUT
-    @ApiOperation(value = "Change the password", notes = "id + new password")
+    @ApiOperation(value = "Change the image", notes = "id + new image")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
@@ -218,6 +224,26 @@ public class UserService {
         else {
             this.queryDAO.showQuery(q);
             return Response.status(200).entity(q).build();
+        }
+    }
+    //Issue minim 2 Tatiana
+    @POST
+    @ApiOperation(value = "Issue", notes = "date + user + message")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Issue.class),
+            @ApiResponse(code = 500, message = "Information Error")
+    })
+    @Path("/report")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response reportIssue(Issue issueInfo) {
+        if (issueInfo.getDate().isEmpty() || issueInfo.getInformer().isEmpty() || issueInfo.getMessage().isEmpty())
+            return Response.status(500).build();
+
+        else {
+            this.issueManager.addIssue(
+             issueInfo.getDate(), issueInfo.getInformer(), issueInfo.getMessage());
+
+            return Response.status(201).entity(issueInfo).build();
         }
     }
 
