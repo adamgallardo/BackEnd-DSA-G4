@@ -1,11 +1,10 @@
 package edu.upc.dsa.services;
 
 import edu.upc.dsa.dao.IUserDAO;
+import edu.upc.dsa.dao.QueryDAO;
+import edu.upc.dsa.dao.implementations.QueryDAOImpl;
 import edu.upc.dsa.dao.implementations.UserDAOImpl;
-import edu.upc.dsa.models.LogIn;
-import edu.upc.dsa.models.PasswordUpdate;
-import edu.upc.dsa.models.SignUp;
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -20,9 +19,11 @@ import javax.ws.rs.core.Response;
 @Path("/user")
 public class UserService {
     private IUserDAO manager;
+    private QueryDAO queryDAO;
 
     public UserService(){
         this.manager = UserDAOImpl.getInstance();
+        this.queryDAO = QueryDAOImpl.getInstance();
     }
 
     // Sign Up
@@ -199,5 +200,26 @@ public class UserService {
             return Response.status(201).entity(user).build();
         }
     }
+
+    //Query minim 2 Bernat
+    @POST
+    @ApiOperation(value = "Query", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Query.class),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/question")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response showQuery(Query query){
+        Query q = new Query(query.getDate(), query.getTitle(), query.getMessage(), query.getSender());
+        if (q.getDate().isEmpty() || q.getTitle().isEmpty() || q.getMessage().isEmpty() || q.getSender().isEmpty())
+            return Response.status(500).build();
+
+        else {
+            this.queryDAO.showQuery(q);
+            return Response.status(200).entity(q).build();
+        }
+    }
+
 }
 
