@@ -87,6 +87,7 @@ public class SessionImpl<E> implements SessionDAO<E> {
 
         try {
             pstm = conn.prepareStatement(selectAllQuery);
+            System.out.println(selectAllQuery);
             pstm.executeQuery();
             ResultSet rs = pstm.getResultSet();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -94,6 +95,8 @@ public class SessionImpl<E> implements SessionDAO<E> {
             while(rs.next()) {
                 Object entity = theClass.newInstance();
                 for (int i = 1; i<rsmd.getColumnCount() + 1; i++) {
+                    System.out.println(rsmd.getColumnName(i));
+                    System.out.println(rs.getObject(i));
                     ObjectHelper.setter(entity,rsmd.getColumnName(i),rs.getObject(i));
                 }
                 result.add((E) entity);

@@ -69,7 +69,7 @@ public class StoreService {
         @GET
         @ApiOperation(value = "Get a particular User's inventory", notes = " ")
         @ApiResponses(value = {
-                @ApiResponse(code = 200, message = "Successful", response = Item.class),
+                @ApiResponse(code = 200, message = "Successful", response = Item.class, responseContainer = "List"),
                 @ApiResponse(code = 404, message = "User not found")
         })
         @Path("inventory/{UserId}")
@@ -80,8 +80,8 @@ public class StoreService {
             if (user == null) {
                 return Response.status(404).build();
             } else {
-                List<Item> inventory = this.inventoryManager.getUserInventory(UserId);
-                GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(inventory) {};
+                List<Item> userInventory = this.inventoryManager.getUserInventory(UserId);
+                GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(userInventory) {};
                 return Response.status(200).entity(entity).build();
             }
         }

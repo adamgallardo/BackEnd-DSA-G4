@@ -1,8 +1,7 @@
 package edu.upc.dsa.dao.implementations;
 
-import edu.upc.dsa.dao.ItemDAO;
 import edu.upc.dsa.dao.MatchDAO;
-import edu.upc.dsa.models.Match;
+import edu.upc.dsa.models.Ranking;
 import org.apache.log4j.Logger;
 
 import java.util.Comparator;
@@ -30,14 +29,14 @@ public class MatchDAOImpl implements MatchDAO {
     }
 
     @Override
-    public List<Match> getRanking() {
-        List<Match> matchList = this.session.findAll(Match.class);
-       // List<Match> ranking = matchList.stream().sorted(Comparator.comparing(Match::getPoints).reversed()).collect(Collectors.toList());
-        return matchList;
+    public List<Ranking> getRanking() {
+        List<Ranking> matchList = this.session.findAll(Ranking.class);
+        List<Ranking> ranking = matchList.stream().sorted(Comparator.comparing(Ranking::getMaxPoints).reversed()).collect(Collectors.toList());
+        return ranking;
     }
 
     @Override
-    public Match addMatch(Match match) {
+    public Ranking addMatch(Ranking match) {
         this.session.save(match);
         return match;
     }

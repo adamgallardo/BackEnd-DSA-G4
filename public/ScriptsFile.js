@@ -207,12 +207,13 @@ if(localStorage.getItem("activeUser")!=null) {
             success:function (result) {
                 for (let i = 0; i < result.length; i++) {
                     console.log("i: "+i, result[i]);
+                    name = result[i].name;
                     $("#itemsTable").append(
                         "<tr> <td>" + result[i].name +
                         "</td> <td>" + result[i].description +
                         "</td> <td>" + result[i].price +
                         "</td><td>" +  '<img src ="images/' + result[i].image + '.png" width = "100" height ="100">' + "</td></tr>" +
-                        '</td><td>' + '<button type = "button" class = "button" onclick="PurchaseItem(result[i].name)">Purchase</button>' + '</td> </tr>');
+                        '</td><td>' + '<button type = "button" class = "button" onclick="PurchaseItem(name)"  >Purchase</button>' + '</td> </tr>');
 
                 }},
 
@@ -232,8 +233,8 @@ if(localStorage.getItem("activeUser")!=null) {
             success: function (result) {
                 for (let i = 0; i < result.length; i++) {
                     $("#rankingTable").append(
-                        "<tr> <td>" + result[i].UserName +
-                        "</td> <td>" + result[i].points + "</td> </tr>");
+                        "<tr> <td>" + result[i].username +
+                        "</td> <td>" + result[i].maxPoints + "</td> </tr>");
                 }
             },
 
@@ -248,7 +249,7 @@ if(localStorage.getItem("activeUser")!=null) {
         var userid = localStorage.getItem("id");
         $.ajax({
             type: 'GET',
-            url: "/dsaApp/item/inventory" + userid,
+            url: '/dsaApp/item/inventory/' + userid,
             dataType: 'json',
             success: function (result) {
                 for (let i = 0; i < result.length; i++) {
@@ -269,10 +270,9 @@ if(localStorage.getItem("activeUser")!=null) {
 
     function PurchaseItem(item) {
         var UserName = localStorage.getItem("activeUser");
-        var ItemName = item;
         $.ajax({
             type: 'PUT',
-            url: "dsaApp/item/PurchaseItem/" + ItemName + "/" + UserName,
+            url: "dsaApp/item/PurchaseItem/" + item + "/" + UserName,
             dataType: 'json',
             success: function (result) {
                 alert(ItemName + 'bought succesfully');

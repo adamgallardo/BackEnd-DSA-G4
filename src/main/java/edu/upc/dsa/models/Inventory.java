@@ -1,15 +1,18 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.util.RandomUtils;
+
 public class Inventory {
     private String id;
-    private String UserId;
-    private String ItemId;
+    private String idUser;
+    private String idItem;
 
     public Inventory(){} // Constructor vacío
 
     public Inventory(String UserId, String ItemId){
-        this.UserId = UserId;
-        this.ItemId = ItemId;
+        this.id = RandomUtils.getId();
+        this.idUser = UserId;
+        this.idItem = ItemId;
     }
     // Getters
 
@@ -18,12 +21,12 @@ public class Inventory {
         return id;
     }
 
-    public String getUserId() {
-        return UserId;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public String getItemId() {
-        return ItemId;
+    public String getIdItem() {
+        return idItem;
     }
 
     // Setters
@@ -33,12 +36,12 @@ public class Inventory {
         this.id = id;
     }
 
-    public void setUserId(String userId) {
-        UserId = userId;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
-    public void setItemId(String itemId) {
-        ItemId = itemId;
+    public void setIdItem(String idItem) {
+        this.idItem = idItem;
     }
 }
 

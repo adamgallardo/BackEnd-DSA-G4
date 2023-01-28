@@ -1,6 +1,5 @@
 package edu.upc.dsa.dao.implementations;
 
-import com.sun.jna.platform.win32.Netapi32Util;
 import edu.upc.dsa.dao.IUserDAO;
 import edu.upc.dsa.dao.InventoryDAO;
 import edu.upc.dsa.dao.ItemDAO;
@@ -50,12 +49,12 @@ public class InventoryDAOImpl implements InventoryDAO {
     @Override
     //Nos da el inventario de un usuario en particular.
     public List<Item> getUserInventory(String UserId) {
-        List<Inventory> Inventorium = this.getInventory();
+        List<Inventory> Inventories = this.getInventory();
         List<Item> items = new LinkedList<>();
 
-        for(Inventory inv: Inventorium){
-            if(inv.getUserId().equals(UserId)){
-                Item i = (Item) this.session.getById(Item.class, inv.getItemId());
+        for(Inventory inv: Inventories){
+            if(inv.getIdUser().equals(UserId)){
+                Item i = (Item) this.session.getById(Item.class, inv.getIdItem());
                 items.add(i);
             }
         }
@@ -78,7 +77,7 @@ public class InventoryDAOImpl implements InventoryDAO {
         Inventory inventory = null;
         User u = (User) this.session.getById(User.class, UserId);
         Item i = (Item) this.session.getById(Item.class, ItemId);
-        if(u.getCoins() < i.getPrice() || !this.Repeated(UserId, ItemId)){
+        if(u.getCoins() >= i.getPrice() || !this.Repeated(UserId, ItemId)){
             inventory = this.addInventory(UserId, ItemId);
             int coins = u.getCoins() - i.getPrice();
             u.setCoins(coins);
@@ -95,7 +94,7 @@ public class InventoryDAOImpl implements InventoryDAO {
         User u = UserManager.getUserByName(UserName);
         Item i = ItemManager.getItemByName(ItemName);
         for (Inventory inv : FullInventory){
-            if((inv.getUserId().equals(u.getId())) && (inv.getItemId().equals(i.getId()))){
+            if((inv.getIdUser().equals(u.getId())) && (inv.getIdItem().equals(i.getId()))){
                 return true;
             }
         }

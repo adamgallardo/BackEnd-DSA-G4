@@ -2,12 +2,9 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.dao.IUserDAO;
 import edu.upc.dsa.dao.MatchDAO;
-import edu.upc.dsa.dao.implementations.InventoryDAOImpl;
-import edu.upc.dsa.dao.implementations.ItemDAOImpl;
 import edu.upc.dsa.dao.implementations.MatchDAOImpl;
 import edu.upc.dsa.dao.implementations.UserDAOImpl;
-import edu.upc.dsa.models.Item;
-import edu.upc.dsa.models.Match;
+import edu.upc.dsa.models.Ranking;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,7 +16,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "/match", description = "Endpoint to Match Service")
@@ -40,19 +36,19 @@ public class MatchService {
     @GET
     @ApiOperation(value = "Get ranking!", notes = " ")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Match.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = Ranking.class, responseContainer="List"),
     })
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRanking() {
 
-        List<Match> ranking =this.matchManager.getRanking(); // new ArrayList<>(); //this.matchManager.getRanking();
+        List<Ranking> ranking =this.matchManager.getRanking(); // new ArrayList<>(); //this.matchManager.getRanking();
 
             /*ranking.add(new Match( "maria", 150));
             ranking.add(new Match( "bjo", 120));
             ranking.add(new Match( "juan", 110));*/
 
-        GenericEntity<List<Match>> entity = new GenericEntity<List<Match>>(ranking) {};
+        GenericEntity<List<Ranking>> entity = new GenericEntity<List<Ranking>>(ranking) {};
         return Response.status(200).entity(entity).build();
     } //añadir respuesta en caso de que vaya mal
 }
