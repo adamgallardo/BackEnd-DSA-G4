@@ -77,10 +77,14 @@ public class InventoryDAOImpl implements InventoryDAO {
         Inventory inventory = null;
         User u = (User) this.session.getById(User.class, UserId);
         Item i = (Item) this.session.getById(Item.class, ItemId);
+        logger.info("amount of coins : " + u.getCoins() + "\n"
+                        + "ItemID and price : " + i.getPrice() + ":" + i.getId() + "\n"+
+                "Done by user : " + UserId);
         if(u.getCoins() >= i.getPrice() && !this.Repeated(UserId, ItemId)){
             inventory = this.addInventory(UserId, ItemId);
             int coins = u.getCoins() - i.getPrice();
             u.setCoins(coins);
+            this.session.save(u);
             logger.info("El usuario"+ u.getUsername()+ "ha comprado el item" + i.getName());
         }
         return inventory;
