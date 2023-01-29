@@ -15,7 +15,6 @@ function signup() {
             data: JSON.stringify({"email": email, "username": username, "password": password}),
             dataType: 'json',
             success: function (result) {
-                localStorage.setItem("activeUser", username);
                 window.location.href = "login.html";
             },
             error: function (error) {
@@ -54,8 +53,7 @@ function login() {
         }
     });
 }
-
-if(localStorage.getItem("activeUser")!=null) {
+//if(localStorage.getItem("activeUser")!=null){
     function eradicate() {
         var id = localStorage.getItem("id");
         if (confirm("Are you sure? There is no way back!") == true) {
@@ -285,10 +283,12 @@ if(localStorage.getItem("activeUser")!=null) {
             },
         })
     }
-}
+/*}
 else{
     window.location.href = "login.html";
-}
+}*/
+
+
 
 
 
