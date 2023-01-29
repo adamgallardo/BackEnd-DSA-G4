@@ -96,14 +96,13 @@ public class StoreService {
                 @ApiResponse(code = 405, message = "Item not found"),
                 @ApiResponse(code = 409, message = "Item is already in possession")
         })
-        @Path("/PurchaseItem/{ItemName}/{UserName}")
+        @Path("/PurchaseItem/{itemId}/{userName}")
         @Produces(MediaType.APPLICATION_JSON)
-        public Response PurchaseItem(@PathParam("ItemName") String ItemName, @PathParam("UserName") String UserName) throws IntrospectionException, IntrospectionException {
+        public Response PurchaseItem(@PathParam("itemId") String itemId, @PathParam("userName") String userName) throws IntrospectionException, IntrospectionException {
 
-            User user = userManager.getUserByName(UserName);
-            Item item = itemManager.getItemByName(ItemName);
-            String UserId = user.getId();
-            String ItemId = item.getId();
+            User user = userManager.getUserByName(userName);
+            Item item = itemManager.getItemById(itemId);
+            String userId = user.getId();
 
             if (user == null) {
                 return Response.status(404).build();
@@ -111,11 +110,12 @@ public class StoreService {
                 return Response.status(405).build();
             } else if (user.getCoins() < item.getPrice()) {
                 return Response.status(402).build();
-            } else if (inventoryManager.Repeated(UserName, ItemName)){
+            } else if (inventoryManager.Repeated(userName, itemId)){
                 return Response.status(409).build();
             } else {
-                this.inventoryManager.PurchaseItem(UserId,ItemId);
-                return Response.status(200).build();
+                this.inventoryManager.PurchaseItem(userName,itemId);
+                User u = userManager.getUserByName(userName);
+                return Response.status(200).entity(u).build();
             }
         }
     }

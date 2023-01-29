@@ -46,12 +46,12 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public Item getItemByName(String ItemName) {
-        Item i = (Item) this.session.getById(Item.class, ItemName);
+    public Item getItemById(String id) {
+        Item i = (Item) this.session.getById(Item.class, id);
         if (i.getName() == null) {
             return null;
         }
-        logger.info("Get item by name " + ItemName);
+        logger.info("Get item by id " + id);
         return i;
 
     }

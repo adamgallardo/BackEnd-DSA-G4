@@ -78,7 +78,7 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User updateCoins(String username, Integer coins) {
         User user = (User) this.session.getByName(User.class, username);
-        logger.info("Updating coins");
+        logger.info("Updating coins" + coins);
         user.setCoins(coins);
         this.session.update(user);
         return user;

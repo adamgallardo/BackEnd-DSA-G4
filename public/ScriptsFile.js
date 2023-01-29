@@ -55,7 +55,7 @@ function login() {
     });
 }
 
-if(localStorage.getItem("activeUser")!=null) {
+//if(localStorage.getItem("activeUser")!=null) {
     function eradicate() {
         var id = localStorage.getItem("id");
         if (confirm("Are you sure? There is no way back!") == true) {
@@ -207,13 +207,13 @@ if(localStorage.getItem("activeUser")!=null) {
             success:function (result) {
                 for (let i = 0; i < result.length; i++) {
                     console.log("i: "+i, result[i]);
-                    name = result[i].name;
                     $("#itemsTable").append(
                         "<tr> <td>" + result[i].name +
                         "</td> <td>" + result[i].description +
                         "</td> <td>" + result[i].price +
                         "</td><td>" +  '<img src ="images/' + result[i].image + '.png" width = "100" height ="100">' + "</td></tr>" +
-                        '</td><td>' + '<button type = "button" class = "button" onclick="PurchaseItem(name)"  >Purchase</button>' + '</td> </tr>');
+                        '</td><td>' + '<button type = "button" class = "button" id="' + result[i].id +
+                        '" onclick="PurchaseItem(this.id)"  >Purchase</button>' + '</td> </tr>');
 
                 }},
 
@@ -266,26 +266,29 @@ if(localStorage.getItem("activeUser")!=null) {
             }
         })
 
-    };
+    }
 
     function PurchaseItem(item) {
-        var UserName = localStorage.getItem("activeUser");
+        var userName = localStorage.getItem("activeUser");
+        var idItem = item;
         $.ajax({
             type: 'PUT',
-            url: "dsaApp/item/PurchaseItem/" + item + "/" + UserName,
+            url: "dsaApp/item/PurchaseItem/" + idItem + "/" + userName,
             dataType: 'json',
             success: function (result) {
-                alert(ItemName + 'bought succesfully');
+                localStorage.setItem("coins", result.coins);
+                window.location.href = "store.html";
+                alert('Bought succesfully' + result.coins);
             },
             error: function (error) {
                 alert('Purchase failed, check if you have enough coins');
             },
         })
     }
-}
+/*}
 else{
     window.location.href = "login.html";
-}
+}*/
 
 
 

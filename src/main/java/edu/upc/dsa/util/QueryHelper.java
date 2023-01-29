@@ -2,6 +2,7 @@ package edu.upc.dsa.util;
 
 public class QueryHelper {
 
+
     public static String createQueryINSERT(Object entity) {
 
         StringBuffer sb = new StringBuffer("INSERT INTO ");
@@ -26,6 +27,7 @@ public class QueryHelper {
         sb.deleteCharAt(sb.length() - 1);
 
         sb.append(")");
+        System.out.println(sb.toString());
         return sb.toString();
     }
     public static String createQuerySELECTAll(Class theClass){

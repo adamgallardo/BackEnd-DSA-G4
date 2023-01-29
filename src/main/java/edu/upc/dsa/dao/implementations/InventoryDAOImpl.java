@@ -16,9 +16,11 @@ public class InventoryDAOImpl implements InventoryDAO {
 
     private SessionImpl session;
 
+
     final static Logger logger = Logger.getLogger(ItemDAOImpl.class);
 
     private static InventoryDAOImpl instance;
+
 
     private InventoryDAOImpl(){
         this.session = SessionImpl.getInstance();
@@ -73,18 +75,19 @@ public class InventoryDAOImpl implements InventoryDAO {
 
     @Override
     // Permite al usuario comprar un Item para su inventario.
-    public Inventory PurchaseItem(String UserId, String ItemId) throws IntrospectionException {
+    public Inventory PurchaseItem(String userName, String itemId) throws IntrospectionException {
         Inventory inventory = null;
-        User u = (User) this.session.getById(User.class, UserId);
-        Item i = (Item) this.session.getById(Item.class, ItemId);
+        User u = (User) this.session.getByName(User.class, userName);
+        Item i = (Item) this.session.getById(Item.class, itemId);
         logger.info("amount of coins : " + u.getCoins() + "\n"
-                        + "ItemID and price : " + i.getPrice() + ":" + i.getId() + "\n"+
-                "Done by user : " + UserId);
-        if(u.getCoins() >= i.getPrice() && !this.Repeated(UserId, ItemId)){
-            inventory = this.addInventory(UserId, ItemId);
+                        + "ItemID and price : " + i.getId() + ":" + i.getPrice() + "\n"+
+                "Done by user : " + userName);
+        if(u.getCoins() >= i.getPrice() && !this.Repeated(userName, itemId)){
+            inventory = this.addInventory(u.getId(), itemId);
             int coins = u.getCoins() - i.getPrice();
-            u.setCoins(coins);
-            this.session.save(u);
+            logger.info("coins: "+coins);
+            u = UserManager.updateCoins(userName,coins);
+            logger.info("..."+u.getCoins());
             logger.info("El usuario"+ u.getUsername()+ "ha comprado el item" + i.getName());
         }
         return inventory;
@@ -93,12 +96,11 @@ public class InventoryDAOImpl implements InventoryDAO {
 
     @Override
     //La siguiente función determina si el usuario ya tiene el objeto en cuestión en su inventario.
-    public boolean Repeated(String UserName, String ItemName) {
+    public boolean Repeated(String userName, String itemId) {
         List<Inventory> FullInventory = this.getInventory();
-        User u = UserManager.getUserByName(UserName);
-        Item i = ItemManager.getItemByName(ItemName);
+        User u = (User) this.session.getByName(User.class, userName);
         for (Inventory inv : FullInventory){
-            if((inv.getIdUser().equals(u.getId())) && (inv.getIdItem().equals(i.getId()))){
+            if((inv.getIdUser().equals(u.getId())) && (inv.getIdItem().equals(itemId))){
                 return true;
             }
         }

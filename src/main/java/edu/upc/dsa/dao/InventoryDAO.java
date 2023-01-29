@@ -13,7 +13,7 @@ public interface InventoryDAO {
 
     public Inventory addInventory(String UserId, String ItemId);
 
-    public Inventory PurchaseItem(String UserId, String ItemId) throws IntrospectionException;
+    public Inventory PurchaseItem(String userName, String itemId) throws IntrospectionException;
 
     public boolean Repeated(String UserName, String ItemName);
 
