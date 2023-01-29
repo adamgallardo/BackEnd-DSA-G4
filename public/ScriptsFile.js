@@ -15,8 +15,8 @@ function signup() {
             data: JSON.stringify({"email": email, "username": username, "password": password}),
             dataType: 'json',
             success: function (result) {
-                alert("Sign up completed. Nice to meet you, " + username);
                 localStorage.setItem("activeUser", username);
+                window.location.href = "login.html";
             },
             error: function (error) {
                 console.log(error);
@@ -55,7 +55,7 @@ function login() {
     });
 }
 
-//if(localStorage.getItem("activeUser")!=null) {
+if(localStorage.getItem("activeUser")!=null) {
     function eradicate() {
         var id = localStorage.getItem("id");
         if (confirm("Are you sure? There is no way back!") == true) {
@@ -218,7 +218,7 @@ function login() {
                 }},
 
             error: function (error) {
-                alert("Unable to get Shop data." + error);
+                alert("Unable to get Shop data.");
                 console.log(error);
                 window.location.href = "Main.html";
             }
@@ -239,7 +239,7 @@ function login() {
             },
 
             error: function (error) {
-                alert("Unable to get Leaderboard data." + error);
+                alert("Unable to get Leaderboard data.");
                 console.log(error);
 
             }
@@ -261,7 +261,7 @@ function login() {
             },
 
             error: function (error) {
-                alert("Unable to get Inventory data." + error);
+                alert("Unable to get Inventory data.");
                 console.log(error);
             }
         })
@@ -278,17 +278,17 @@ function login() {
             success: function (result) {
                 localStorage.setItem("coins", result.coins);
                 window.location.href = "store.html";
-                alert('Bought succesfully' + result.coins);
+                alert('Bought succesfully');
             },
             error: function (error) {
-                alert('Purchase failed, check if you have enough coins');
+                alert('Purchase failed');
             },
         })
     }
-/*}
+}
 else{
     window.location.href = "login.html";
-}*/
+}
 
 
 
